@@ -1,0 +1,157 @@
+.quiz-page {
+  min-height: 100vh;
+  padding: 40rpx 48rpx 80rpx;
+}
+
+.quiz-top {
+  margin-bottom: 48rpx;
+}
+
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16rpx 24rpx;
+}
+
+.category-tag {
+  display: inline-flex;
+  padding: 6rpx 18rpx;
+  font-size: 22rpx;
+  letter-spacing: 0.12em;
+  color: var(--teal);
+  background: var(--teal-soft);
+  border-radius: 4rpx;
+}
+
+.streak {
+  font-size: 24rpx;
+  color: var(--teal-deep);
+  letter-spacing: 0.06em;
+}
+
+.session-stat {
+  margin-left: auto;
+  font-size: 24rpx;
+  color: var(--ink-muted);
+}
+
+.question-block {
+  margin-bottom: 56rpx;
+}
+
+.question-text {
+  font-family: "Songti SC", "STSong", "Noto Serif SC", serif;
+  font-size: 40rpx;
+  line-height: 1.55;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: 24rpx;
+  padding: 28rpx 28rpx;
+  border-bottom: 2rpx solid var(--line);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.option:active {
+  background: rgba(47, 111, 102, 0.06);
+}
+
+.option-label {
+  flex-shrink: 0;
+  width: 44rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--ink-muted);
+  line-height: 1.5;
+}
+
+.option-text {
+  flex: 1;
+  font-size: 30rpx;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.option.is-right {
+  background: var(--right-soft);
+  border-bottom-color: var(--right);
+}
+
+.option.is-right .option-label,
+.option.is-right .option-text {
+  color: var(--right);
+  font-weight: 600;
+}
+
+.option.is-wrong {
+  background: var(--wrong-soft);
+  border-bottom-color: var(--wrong);
+}
+
+.option.is-wrong .option-label,
+.option.is-wrong .option-text {
+  color: var(--wrong);
+}
+
+.feedback {
+  margin-top: 56rpx;
+  padding-top: 40rpx;
+  border-top: 2rpx solid var(--line);
+  animation: fadeUp 0.28s ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.feedback-title {
+  font-family: "Songti SC", "STSong", "Noto Serif SC", serif;
+  font-size: 34rpx;
+  letter-spacing: 0.1em;
+  margin-bottom: 16rpx;
+}
+
+.feedback-title.ok {
+  color: var(--right);
+}
+
+.feedback-title.no {
+  color: var(--wrong);
+}
+
+.feedback-explain {
+  font-size: 28rpx;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  margin-bottom: 40rpx;
+}
+
+.next-btn {
+  width: 100%;
+}
+
+.hint {
+  margin-top: 64rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: var(--ink-muted);
+  letter-spacing: 0.16em;
+}

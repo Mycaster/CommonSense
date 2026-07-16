@@ -1,0 +1,48 @@
+<view class="stats-page">
+  <view class="summary">
+    <text class="summary-label">累计正确率</text>
+    <view class="summary-rate">
+      <text class="rate-num">{{accuracy}}</text>
+      <text class="rate-unit">%</text>
+    </view>
+    <view class="summary-grid">
+      <view class="summary-item">
+        <text class="item-num">{{total}}</text>
+        <text class="item-label">已答</text>
+      </view>
+      <view class="summary-item">
+        <text class="item-num">{{correct}}</text>
+        <text class="item-label">正确</text>
+      </view>
+      <view class="summary-item">
+        <text class="item-num">{{wrong}}</text>
+        <text class="item-label">错误</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="block" wx:if="{{categoryRows.length}}">
+    <text class="block-title">分类正确率</text>
+    <view class="cat-list">
+      <view class="cat-row" wx:for="{{categoryRows}}" wx:key="name">
+        <text class="cat-name">{{item.name}}</text>
+        <view class="cat-bar-wrap">
+          <view class="cat-bar" style="width: {{item.accuracy}}%;"></view>
+        </view>
+        <text class="cat-pct">{{item.accuracy}}%</text>
+        <text class="cat-count">{{item.correct}}/{{item.total}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:if="{{!hasData}}">
+    <text class="empty-title">还没有答题记录</text>
+    <text class="empty-desc">去答几道题，成绩会出现在这里</text>
+    <button class="btn-primary empty-cta" bindtap="goQuiz">开始答题</button>
+  </view>
+
+  <view class="actions" wx:if="{{hasData}}">
+    <button class="btn-ghost" bindtap="goQuiz">继续答题</button>
+    <button class="btn-text clear-btn" bindtap="onClear">清空记录</button>
+  </view>
+</view>

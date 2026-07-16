@@ -1,0 +1,103 @@
+page {
+  --ink: #1c1a17;
+  --ink-soft: #4a453e;
+  --ink-muted: #7a7368;
+  --paper: #f3ede3;
+  --paper-deep: #e8dfd0;
+  --line: #d4c9b8;
+  --teal: #2f6f66;
+  --teal-deep: #245851;
+  --teal-soft: #dceae7;
+  --wrong: #a8483c;
+  --wrong-soft: #f3e0dc;
+  --right: #2f6f66;
+  --right-soft: #dceae7;
+
+  min-height: 100%;
+  background:
+    radial-gradient(ellipse 120% 80% at 10% -10%, rgba(47, 111, 102, 0.08), transparent 55%),
+    radial-gradient(ellipse 90% 70% at 100% 0%, rgba(168, 120, 72, 0.07), transparent 50%),
+    linear-gradient(180deg, #f7f2ea 0%, var(--paper) 40%, #ebe3d6 100%);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", sans-serif;
+  font-size: 28rpx;
+  line-height: 1.6;
+  box-sizing: border-box;
+}
+
+view,
+text,
+button {
+  box-sizing: border-box;
+}
+
+.brand-title {
+  font-family: "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+}
+
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 96rpx;
+  padding: 0 48rpx;
+  background: var(--teal);
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  border-radius: 8rpx;
+  border: none;
+  line-height: 1;
+}
+
+.btn-primary::after {
+  border: none;
+}
+
+.btn-primary:active {
+  background: var(--teal-deep);
+}
+
+.btn-ghost {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 88rpx;
+  padding: 0 40rpx;
+  background: transparent;
+  color: var(--teal);
+  font-size: 28rpx;
+  letter-spacing: 0.08em;
+  border-radius: 8rpx;
+  border: 2rpx solid var(--teal);
+  line-height: 1;
+}
+
+.btn-ghost::after {
+  border: none;
+}
+
+.btn-ghost:active {
+  background: var(--teal-soft);
+}
+
+.btn-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16rpx 8rpx;
+  background: transparent;
+  color: var(--ink-muted);
+  font-size: 26rpx;
+  border: none;
+  line-height: 1;
+}
+
+.btn-text::after {
+  border: none;
+}
