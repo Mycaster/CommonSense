@@ -30,6 +30,12 @@
   letter-spacing: 0.06em;
 }
 
+.checkin-badge {
+  font-size: 22rpx;
+  color: var(--teal);
+  letter-spacing: 0.06em;
+}
+
 .session-stat {
   margin-left: auto;
   font-size: 24rpx;

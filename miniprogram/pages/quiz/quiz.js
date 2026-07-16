@@ -1,5 +1,6 @@
 const { pickRandom, checkAnswer } = require('../../utils/quiz')
 const { recordAnswer } = require('../../utils/storage')
+const { punchAfterAnswer } = require('../../services/checkin')
 
 const RECENT_LIMIT = 12
 const OPTION_LABELS = ['A', 'B', 'C', 'D']
@@ -14,7 +15,8 @@ Page({
     isCorrect: false,
     streak: 0,
     sessionTotal: 0,
-    sessionCorrect: 0
+    sessionCorrect: 0,
+    checkedToday: false
   },
 
   recentIds: [],
@@ -44,7 +46,7 @@ Page({
     })
   },
 
-  onSelect(e) {
+  async onSelect(e) {
     if (this.data.answered) {
       return
     }
@@ -63,6 +65,15 @@ Page({
       sessionTotal: sessionTotal + 1,
       sessionCorrect: sessionCorrect + (isCorrect ? 1 : 0)
     })
+
+    try {
+      const summary = await punchAfterAnswer(isCorrect)
+      if (summary && summary.checkedToday && !this.data.checkedToday) {
+        this.setData({ checkedToday: true })
+      }
+    } catch (err) {
+      // 忽略打卡失败，不影响答题
+    }
   },
 
   onNext() {

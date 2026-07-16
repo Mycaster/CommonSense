@@ -21,4 +21,16 @@
 | remove | 物理删除 |
 | seed | 空库时灌入种子题 |
 
-部署后请在云开发控制台为 `manageQuestions` 配置环境变量或写入 `admins` 集合。
+## checkin
+
+按 openid 记录每日打卡（答一题即打卡），并上云保存历史。
+
+| action | 说明 |
+|--------|------|
+| punch | 当日累加 answered / correct |
+| history / summary | 连续天数、累计天数、历史列表 |
+
+集合 `checkins` 建议字段：`openid`、`date`(YYYY-MM-DD)、`answered`、`correct`、`createdAt`、`updatedAt`。  
+查询会用到 `openid + date`，请在控制台按提示创建组合索引。
+
+部署后请为 `manageQuestions` 配置环境变量或写入 `admins` 集合。

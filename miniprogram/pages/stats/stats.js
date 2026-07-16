@@ -1,5 +1,10 @@
 const { readStats, clearStats, getAccuracy } = require('../../utils/storage')
 const { getCategories } = require('../../utils/quiz')
+const {
+  syncCheckins,
+  getLocalSummary,
+  getCalendarMonth
+} = require('../../services/checkin')
 
 Page({
   data: {
@@ -8,26 +13,40 @@ Page({
     wrong: 0,
     accuracy: 0,
     categoryRows: [],
-    hasData: false
+    hasData: false,
+    // 打卡
+    checkedToday: false,
+    checkinStreak: 0,
+    checkinDays: 0,
+    calendarLabel: '',
+    weekLabels: ['日', '一', '二', '三', '四', '五', '六'],
+    calendarCells: [],
+    recentCheckins: [],
+    checkinSource: ''
   },
+
+  monthOffset: 0,
 
   onShow() {
     this.refresh()
+    this.refreshCheckin()
   },
 
   refresh() {
     const stats = readStats()
     const categories = getCategories()
-    const categoryRows = categories.map((name) => {
-      const item = stats.byCategory[name] || { total: 0, correct: 0 }
-      const accuracy = item.total ? Math.round((item.correct / item.total) * 100) : 0
-      return {
-        name,
-        total: item.total,
-        correct: item.correct,
-        accuracy
-      }
-    }).filter((row) => row.total > 0)
+    const categoryRows = categories
+      .map((name) => {
+        const item = stats.byCategory[name] || { total: 0, correct: 0 }
+        const accuracy = item.total ? Math.round((item.correct / item.total) * 100) : 0
+        return {
+          name,
+          total: item.total,
+          correct: item.correct,
+          accuracy
+        }
+      })
+      .filter((row) => row.total > 0)
 
     this.setData({
       total: stats.total,
@@ -39,16 +58,57 @@ Page({
     })
   },
 
+  applyCheckinSummary(summary) {
+    const cal = getCalendarMonth(this.monthOffset)
+    const recent = (summary.list || []).slice(0, 14)
+    this.setData({
+      checkedToday: !!summary.checkedToday,
+      checkinStreak: summary.streak || 0,
+      checkinDays: summary.totalDays || 0,
+      calendarLabel: cal.label,
+      calendarCells: cal.cells,
+      recentCheckins: recent,
+      checkinSource: summary.source || ''
+    })
+  },
+
+  async refreshCheckin() {
+    // 先渲染本地，再拉云端
+    this.applyCheckinSummary(getLocalSummary())
+    const summary = await syncCheckins()
+    getApp().globalData.checkinSummary = summary
+    this.applyCheckinSummary(summary)
+  },
+
+  onPrevMonth() {
+    this.monthOffset -= 1
+    const cal = getCalendarMonth(this.monthOffset)
+    this.setData({
+      calendarLabel: cal.label,
+      calendarCells: cal.cells
+    })
+  },
+
+  onNextMonth() {
+    if (this.monthOffset >= 0) return
+    this.monthOffset += 1
+    const cal = getCalendarMonth(this.monthOffset)
+    this.setData({
+      calendarLabel: cal.label,
+      calendarCells: cal.cells
+    })
+  },
+
   onClear() {
     wx.showModal({
-      title: '清空记录',
-      content: '确定清空全部答题成绩吗？此操作不可恢复。',
+      title: '清空成绩',
+      content: '仅清空本机答题正确率统计，不会删除云端打卡历史。确定继续？',
       confirmColor: '#2f6f66',
       success: (res) => {
         if (res.confirm) {
           clearStats()
           this.refresh()
-          wx.showToast({ title: '已清空', icon: 'success' })
+          wx.showToast({ title: '已清空成绩', icon: 'success' })
         }
       }
     })

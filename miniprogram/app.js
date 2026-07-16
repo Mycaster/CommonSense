@@ -1,17 +1,20 @@
 const config = require('./config')
 const { syncQuestions } = require('./services/questionBank')
+const { syncCheckins } = require('./services/checkin')
 
 App({
   globalData: {
     sessionStreak: 0,
     questionsReady: false,
     isAdmin: false,
-    openid: ''
+    openid: '',
+    checkinSummary: null
   },
 
   onLaunch() {
     this.initCloud()
     this.syncBank()
+    this.syncCheckin()
   },
 
   initCloud() {
@@ -20,7 +23,6 @@ App({
       return
     }
     if (!config.cloudEnvId) {
-      // 未配置环境：保持本地题库模式
       return
     }
     wx.cloud.init({
@@ -40,6 +42,15 @@ App({
     } catch (e) {
       this.globalData.questionsReady = true
       console.warn('题库同步失败', e)
+    }
+  },
+
+  async syncCheckin() {
+    try {
+      const summary = await syncCheckins()
+      this.globalData.checkinSummary = summary
+    } catch (e) {
+      console.warn('打卡同步失败', e)
     }
   }
 })

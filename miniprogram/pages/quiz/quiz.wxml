@@ -3,6 +3,7 @@
     <view class="meta-row">
       <text class="category-tag" wx:if="{{question}}">{{question.category}}</text>
       <text class="streak" wx:if="{{streak > 1}}">连对 {{streak}}</text>
+      <text class="checkin-badge" wx:if="{{checkedToday}}">今日已打卡</text>
       <text class="session-stat" wx:if="{{sessionTotal > 0}}">本局 {{sessionCorrect}}/{{sessionTotal}}</text>
     </view>
   </view>
