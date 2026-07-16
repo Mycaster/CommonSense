@@ -1,0 +1,61 @@
+<view class="admin-page">
+  <view class="toolbar">
+    <input
+      class="search-input"
+      placeholder="搜索题干或 id"
+      value="{{keyword}}"
+      confirm-type="search"
+      bindinput="onKeywordInput"
+      bindconfirm="onSearch"
+    />
+    <button class="btn-primary tool-btn" bindtap="onSearch">搜索</button>
+  </view>
+
+  <view class="filters">
+    <text
+      wx:for="{{statusOptions}}"
+      wx:key="value"
+      class="filter-chip {{statusFilter === item.value ? 'active' : ''}}"
+      data-value="{{item.value}}"
+      bindtap="onStatusTap"
+    >{{item.label}}</text>
+  </view>
+
+  <view class="meta-row">
+    <text>共 {{total}} 题</text>
+    <view class="meta-actions">
+      <button class="btn-text" bindtap="onSeed">灌入种子</button>
+      <button class="btn-text" bindtap="goCreate">新建</button>
+    </view>
+  </view>
+
+  <view class="loading" wx:if="{{loading}}">加载中…</view>
+
+  <view class="q-list" wx:else>
+    <view class="q-item" wx:for="{{list}}" wx:key="_id">
+      <view class="q-main" data-id="{{item._id}}" bindtap="goEdit">
+        <view class="q-top">
+          <text class="q-cat">{{item.category}}</text>
+          <text class="q-status status-{{item.status}}">{{item.status}}</text>
+        </view>
+        <text class="q-title">{{item.question}}</text>
+        <text class="q-id">{{item.id}}</text>
+      </view>
+      <button
+        class="btn-ghost archive-btn"
+        data-id="{{item._id}}"
+        data-status="{{item.status}}"
+        bindtap="onArchive"
+      >{{item.status === 'archived' ? '发布' : '下架'}}</button>
+    </view>
+
+    <view class="empty" wx:if="{{!list.length}}">
+      <text>暂无题目。可点「灌入种子」或「新建」。</text>
+    </view>
+  </view>
+
+  <view class="openid-hint" wx:if="{{openid}}" bindtap="onCopyOpenid">
+    <text>当前 openid（点按复制）</text>
+    <text class="openid-val">{{openid}}</text>
+  </view>
+</view>

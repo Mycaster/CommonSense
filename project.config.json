@@ -1,0 +1,27 @@
+{
+  "miniprogramRoot": "miniprogram/",
+  "cloudfunctionRoot": "cloudfunctions/",
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true
+  },
+  "appid": "touristappid",
+  "projectname": "文化常识自救",
+  "compileType": "miniprogram",
+  "libVersion": "3.5.5",
+  "condition": {},
+  "srcMiniprogramRoot": "miniprogram/",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  },
+  "cloudfunctionTemplateRoot": "",
+  "description": "文化常识自救 - 微信小程序（云开发题库）"
+}

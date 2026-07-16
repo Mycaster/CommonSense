@@ -1,0 +1,41 @@
+<view class="quiz-page">
+  <view class="quiz-top">
+    <view class="meta-row">
+      <text class="category-tag" wx:if="{{question}}">{{question.category}}</text>
+      <text class="streak" wx:if="{{streak > 1}}">连对 {{streak}}</text>
+      <text class="checkin-badge" wx:if="{{checkedToday}}">今日已打卡</text>
+      <text class="session-stat" wx:if="{{sessionTotal > 0}}">本局 {{sessionCorrect}}/{{sessionTotal}}</text>
+    </view>
+  </view>
+
+  <view class="question-block" wx:if="{{question}}">
+    <text class="question-text">{{question.question}}</text>
+  </view>
+
+  <view class="options" wx:if="{{question}}">
+    <view
+      wx:for="{{question.options}}"
+      wx:key="idx"
+      wx:for-index="idx"
+      class="option {{answered && idx === question.answer ? 'is-right' : ''}} {{answered && idx === selectedIndex && idx !== question.answer ? 'is-wrong' : ''}} {{!answered && selectedIndex === idx ? 'is-active' : ''}}"
+      data-index="{{idx}}"
+      bindtap="onSelect"
+    >
+      <text class="option-label">{{optionLabels[idx]}}</text>
+      <text class="option-text">{{item}}</text>
+    </view>
+  </view>
+
+  <view class="feedback" wx:if="{{answered}}">
+    <view class="feedback-title {{isCorrect ? 'ok' : 'no'}}">
+      {{isCorrect ? '回答正确' : '回答错误'}}
+    </view>
+    <view class="feedback-explain">{{question.explain}}</view>
+    <button class="btn-primary next-btn" bindtap="onNext">下一题</button>
+    <button class="btn-ghost share-btn" open-type="share">分享这道题</button>
+  </view>
+
+  <view class="hint" wx:if="{{!answered}}">
+    <text>选择一个答案</text>
+  </view>
+</view>

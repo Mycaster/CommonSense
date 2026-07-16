@@ -1,0 +1,71 @@
+<view class="edit-page">
+  <view class="field">
+    <text class="label">业务 id（可选）</text>
+    <input class="input" placeholder="如 hist-010" value="{{form.id}}" bindinput="onIdInput" />
+  </view>
+
+  <view class="field">
+    <text class="label">分类</text>
+    <picker mode="selector" range="{{categories}}" value="{{categoryIndex}}" bindchange="onCategoryChange">
+      <view class="picker-val">{{form.category}}</view>
+    </picker>
+  </view>
+
+  <view class="field">
+    <text class="label">题干</text>
+    <textarea
+      class="textarea"
+      placeholder="输入题目"
+      value="{{form.question}}"
+      maxlength="500"
+      auto-height
+      bindinput="onQuestionInput"
+    />
+  </view>
+
+  <view class="field">
+    <text class="label">选项（点左侧字母设为正确答案）</text>
+    <view class="option-row" wx:for="{{form.options}}" wx:key="index" wx:for-index="idx">
+      <view
+        class="opt-key {{form.answer === idx ? 'active' : ''}}"
+        data-index="{{idx}}"
+        bindtap="onAnswerTap"
+      >{{answerLabels[idx]}}</view>
+      <input
+        class="input opt-input"
+        placeholder="选项 {{answerLabels[idx]}}"
+        value="{{item}}"
+        data-index="{{idx}}"
+        bindinput="onOptionInput"
+      />
+    </view>
+  </view>
+
+  <view class="field">
+    <text class="label">解析</text>
+    <textarea
+      class="textarea"
+      placeholder="简短解析"
+      value="{{form.explain}}"
+      maxlength="500"
+      auto-height
+      bindinput="onExplainInput"
+    />
+  </view>
+
+  <view class="field">
+    <text class="label">状态</text>
+    <view class="status-row">
+      <text
+        wx:for="{{statusOptions}}"
+        wx:key="value"
+        class="status-chip {{form.status === item.value ? 'active' : ''}}"
+        data-value="{{item.value}}"
+        bindtap="onStatusTap"
+      >{{item.label}}</text>
+    </view>
+  </view>
+
+  <button class="btn-primary save-btn" loading="{{saving}}" bindtap="onSave">保存</button>
+  <button class="btn-text delete-btn" wx:if="{{!isNew}}" bindtap="onDelete">删除题目</button>
+</view>

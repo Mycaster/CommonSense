@@ -1,0 +1,37 @@
+<view class="home">
+  <view class="hero">
+    <view class="hero-ornament" aria-hidden="true"></view>
+    <text class="brand-title hero-brand" bindlongpress="onBrandLongPress">文化常识自救</text>
+    <text class="hero-slogan">用知识武装大脑 · 随机一题，温故知新</text>
+    <button class="btn-primary hero-cta" bindtap="startQuiz">开始答题</button>
+    <button class="btn-ghost hero-secondary" bindtap="goStats">我的成绩</button>
+    <button class="btn-text hero-share" open-type="share">分享给好友</button>
+    <view class="hero-meta">
+      <text>题库 {{totalCount}} 题</text>
+      <text wx:if="{{answered > 0}}" class="dot">·</text>
+      <text wx:if="{{answered > 0}}">正确率 {{accuracy}}%</text>
+    </view>
+    <view class="admin-entry" wx:if="{{isAdmin}}">
+      <button class="btn-text" bindtap="goAdmin">题库管理</button>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-head">
+      <text class="section-title">分类练习</text>
+      <text class="section-desc">按主题刷题，查漏补缺</text>
+    </view>
+    <view class="category-grid">
+      <view
+        class="category-item"
+        wx:for="{{categories}}"
+        wx:key="name"
+        data-name="{{item.name}}"
+        bindtap="startCategory"
+      >
+        <text class="category-name">{{item.name}}</text>
+        <text class="category-count">{{item.count}} 题</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,19 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/quiz/quiz",
+    "pages/stats/stats",
+    "pages/admin/list/list",
+    "pages/admin/edit/edit"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#F3EDE3",
+    "navigationBarTitleText": "文化常识自救",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F3EDE3",
+    "backgroundTextStyle": "dark"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "cloud": true
+}
