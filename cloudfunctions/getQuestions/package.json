@@ -1,0 +1,9 @@
+{
+  "name": "getQuestions",
+  "version": "1.0.0",
+  "description": "拉取已发布题库",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

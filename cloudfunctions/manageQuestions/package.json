@@ -1,0 +1,9 @@
+{
+  "name": "manageQuestions",
+  "version": "1.0.0",
+  "description": "题库管理（白名单管理员）",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

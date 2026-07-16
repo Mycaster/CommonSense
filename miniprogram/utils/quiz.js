@@ -1,9 +1,10 @@
-const { questions, CATEGORIES } = require('../data/questions')
+const { getQuestions, getCategories } = require('../services/questionBank')
 
 /**
  * 按分类筛选题库；不传则返回全部
  */
 function getPool(category) {
+  const questions = getQuestions()
   if (!category || category === '全部') {
     return questions.slice()
   }
@@ -40,18 +41,13 @@ function checkAnswer(question, selectedIndex) {
 }
 
 /**
- * 获取所有分类
- */
-function getCategories() {
-  return CATEGORIES.slice()
-}
-
-/**
  * 各分类题目数量
  */
 function getCategoryCounts() {
+  const categories = getCategories()
+  const questions = getQuestions()
   const counts = {}
-  CATEGORIES.forEach((c) => {
+  categories.forEach((c) => {
     counts[c] = 0
   })
   questions.forEach((q) => {
@@ -62,11 +58,15 @@ function getCategoryCounts() {
   return counts
 }
 
+function totalCount() {
+  return getQuestions().length
+}
+
 module.exports = {
   pickRandom,
   checkAnswer,
   getPool,
   getCategories,
   getCategoryCounts,
-  totalCount: questions.length
+  totalCount
 }

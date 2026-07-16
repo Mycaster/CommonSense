@@ -89,6 +89,10 @@
   opacity: 0.5;
 }
 
+.admin-entry {
+  margin-top: 24rpx;
+}
+
 @keyframes brandIn {
   from {
     opacity: 0;
