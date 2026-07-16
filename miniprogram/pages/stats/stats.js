@@ -5,6 +5,7 @@ const {
   getLocalSummary,
   getCalendarMonth
 } = require('../../services/checkin')
+const { shareToFriend, shareToTimeline, enableShareMenu } = require('../../utils/share')
 
 Page({
   data: {
@@ -27,9 +28,39 @@ Page({
 
   monthOffset: 0,
 
+  onLoad() {
+    enableShareMenu()
+  },
+
   onShow() {
     this.refresh()
     this.refreshCheckin()
+  },
+
+  onShareAppMessage() {
+    const { accuracy, total, checkinStreak, checkinDays } = this.data
+    let title = '文化常识自救 · 来一起打卡答题'
+    if (checkinStreak > 1) {
+      title = `文化常识自救 · 我已连续打卡 ${checkinStreak} 天`
+    } else if (total > 0) {
+      title = `文化常识自救 · 答了 ${total} 题，正确率 ${accuracy}%`
+    } else if (checkinDays > 0) {
+      title = `文化常识自救 · 累计打卡 ${checkinDays} 天`
+    }
+    return shareToFriend({
+      title,
+      path: '/pages/index/index'
+    })
+  },
+
+  onShareTimeline() {
+    const { checkinStreak } = this.data
+    return shareToTimeline({
+      title:
+        checkinStreak > 1
+          ? `文化常识自救 · 连续打卡 ${checkinStreak} 天`
+          : '文化常识自救 · 每日一题，温故知新'
+    })
   },
 
   refresh() {

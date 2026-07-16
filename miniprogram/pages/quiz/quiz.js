@@ -1,6 +1,7 @@
 const { pickRandom, checkAnswer } = require('../../utils/quiz')
 const { recordAnswer } = require('../../utils/storage')
 const { punchAfterAnswer } = require('../../services/checkin')
+const { shareToFriend, shareToTimeline, enableShareMenu } = require('../../utils/share')
 
 const RECENT_LIMIT = 12
 const OPTION_LABELS = ['A', 'B', 'C', 'D']
@@ -22,11 +23,42 @@ Page({
   recentIds: [],
 
   onLoad(options) {
+    enableShareMenu()
     const category = options.category ? decodeURIComponent(options.category) : ''
     const title = category ? `${category}·答题` : '随机答题'
     wx.setNavigationBarTitle({ title })
     this.setData({ category })
     this.loadNext()
+  },
+
+  onShareAppMessage() {
+    const { category, question, sessionTotal, sessionCorrect } = this.data
+    let title = '文化常识自救 · 来答一题'
+    if (question && question.question) {
+      const q = question.question.length > 28
+        ? `${question.question.slice(0, 28)}…`
+        : question.question
+      title = `文化常识自救 · ${q}`
+    } else if (category) {
+      title = `文化常识自救 · ${category}练习`
+    } else if (sessionTotal > 0) {
+      title = `文化常识自救 · 本局 ${sessionCorrect}/${sessionTotal}`
+    }
+    const path = category
+      ? `/pages/quiz/quiz?category=${encodeURIComponent(category)}`
+      : '/pages/quiz/quiz'
+    return shareToFriend({ title, path })
+  },
+
+  onShareTimeline() {
+    const { category, question } = this.data
+    const title = question && question.question
+      ? `文化常识自救 · ${question.question}`
+      : '文化常识自救 · 随机一题温故知新'
+    return shareToTimeline({
+      title,
+      query: category ? `category=${encodeURIComponent(category)}` : ''
+    })
   },
 
   loadNext() {

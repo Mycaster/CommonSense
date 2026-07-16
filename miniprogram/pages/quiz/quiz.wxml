@@ -32,6 +32,7 @@
     </view>
     <view class="feedback-explain">{{question.explain}}</view>
     <button class="btn-primary next-btn" bindtap="onNext">下一题</button>
+    <button class="btn-ghost share-btn" open-type="share">分享这道题</button>
   </view>
 
   <view class="hint" wx:if="{{!answered}}">

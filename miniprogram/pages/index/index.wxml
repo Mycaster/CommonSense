@@ -5,6 +5,7 @@
     <text class="hero-slogan">用知识武装大脑 · 随机一题，温故知新</text>
     <button class="btn-primary hero-cta" bindtap="startQuiz">开始答题</button>
     <button class="btn-ghost hero-secondary" bindtap="goStats">我的成绩</button>
+    <button class="btn-text hero-share" open-type="share">分享给好友</button>
     <view class="hero-meta">
       <text>题库 {{totalCount}} 题</text>
       <text wx:if="{{answered > 0}}" class="dot">·</text>

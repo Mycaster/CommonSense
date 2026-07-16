@@ -1,6 +1,7 @@
 const { getCategories, getCategoryCounts, totalCount } = require('../../utils/quiz')
 const { readStats, getAccuracy } = require('../../utils/storage')
 const { checkAdmin } = require('../../services/admin')
+const { shareToFriend, shareToTimeline, enableShareMenu } = require('../../utils/share')
 
 Page({
   data: {
@@ -13,10 +14,30 @@ Page({
   },
 
   onLoad() {
+    enableShareMenu()
     const app = getApp()
     app._onQuestionsReady = () => {
       this.refreshBank()
     }
+  },
+
+  onShareAppMessage() {
+    const { totalCount, accuracy, answered } = this.data
+    const title =
+      answered > 0
+        ? `文化常识自救 · 我答了 ${answered} 题，正确率 ${accuracy}%`
+        : `文化常识自救 · ${totalCount} 道文化常识等你来答`
+    return shareToFriend({
+      title,
+      path: '/pages/index/index'
+    })
+  },
+
+  onShareTimeline() {
+    return shareToTimeline({
+      title: '文化常识自救 · 用知识武装大脑',
+      query: ''
+    })
   },
 
   onShow() {

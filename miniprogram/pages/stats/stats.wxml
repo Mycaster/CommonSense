@@ -90,6 +90,7 @@
 
   <view class="actions">
     <button class="btn-ghost" bindtap="goQuiz">{{hasData ? '继续答题' : '开始答题'}}</button>
+    <button class="btn-ghost" open-type="share">分享成绩</button>
     <button class="btn-text clear-btn" wx:if="{{hasData}}" bindtap="onClear">清空成绩</button>
   </view>
 </view>
